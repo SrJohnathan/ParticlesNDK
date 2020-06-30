@@ -1,0 +1,8 @@
+/out/
+/.vs/
+/.idea/
+/build/
+/cmake-build-debug/
+/src/libs/
+/src/Effekseer/
+/src/obj/
