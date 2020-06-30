@@ -14,6 +14,8 @@ add_library(
   EffekseerManagerCore.cpp
   EffekseerSettingCore.h
   EffekseerSettingCore.cpp
+        Vector4Map.cpp
+        Vector4Map.h
 )
 
 target_include_directories(

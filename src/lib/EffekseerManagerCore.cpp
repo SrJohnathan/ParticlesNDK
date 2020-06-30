@@ -49,6 +49,8 @@ float GetOrthoScale() { return OrthoScaleBase / powf(ZoomDistanceFactor, g_Zoom)
 
 static Effekseer::Manager::DrawParameter drawParameter;
 static ::Effekseer::Vector3D g_focus_position;
+static ::Effekseer::Matrix44 projectionmatrix,cameramatrix;
+
 Effekseer::Vector3D cameraPosition = ::Effekseer::Vector3D(0.0f, 50.0f, 200.0f);
 
 EffekseerManagerCore::~EffekseerManagerCore() {
@@ -184,17 +186,10 @@ void EffekseerManagerCore::SetEffectScale(int handle, float x, float y, float z)
 }
 
 void EffekseerManagerCore::SetCameraPosition(float x, float y, float z) {
-
-
-
     drawParameter.CameraPosition.X = x;
     drawParameter.CameraPosition.Y = y;
     drawParameter.CameraPosition.Z = z;
-
-
   //  std::cout << z << std::endl;
-
-
 
 }
 
@@ -203,9 +198,17 @@ void EffekseerManagerCore::SetCameraRotate(float x, float y, float z) {
     drawParameter.CameraDirection .X = x;
     drawParameter.CameraDirection.Y = y;
     drawParameter.CameraDirection.Z = z;
+}
 
+
+
+void EffekseerManagerCore::SetProjectionMatrix(Effekseer::Matrix44 matrix44,Effekseer::Matrix44 matrix44C){
+
+    projectionmatrix = matrix44;
+    cameramatrix = matrix44C;
 
 }
+
 
 void EffekseerManagerCore::DrawBack() {
     if (manager_ == nullptr) {
@@ -256,23 +259,15 @@ EffekseerManagerCore::SetViewProjectionMatrixWithSimpleWindowPerspective(float_t
     }
 
 
-    renderer_->SetProjectionMatrix(
-            ::Effekseer::Matrix44().PerspectiveFovRH_OpenGL(67.0f / 180.0f * 3.14f, (float) windowWidth / (float) windowHeight,
-                                                     nea, faer));
 
 
+   //  renderer_->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovRH_OpenGL(67.0f / 180.0f * 3.14f, (float) windowWidth / (float) windowHeight,nea, faer));
+
+   renderer_->SetProjectionMatrix(projectionmatrix);
+    renderer_->SetCameraMatrix(cameramatrix);
 
 
-    renderer_->SetCameraMatrix(
-            ::Effekseer::Matrix44().LookAtRH(
-
-                    drawParameter.CameraPosition,
-                    ::Effekseer::Vector3D(0.0f,0.0f,0.0f),
-                    ::Effekseer::Vector3D(up[0], up[1], up[2])));
-
-
-
-
+   // renderer_->SetCameraMatrix(::Effekseer::Matrix44().LookAtRH(drawParameter.CameraPosition,::Effekseer::Vector3D(0.0f,0.0f,0.0f),::Effekseer::Vector3D(up[0], up[1], up[2])));
 
 }
 

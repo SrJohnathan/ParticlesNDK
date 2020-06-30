@@ -247,6 +247,7 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 #include "lib/EffekseerBackendCore.h"
 #include "lib/EffekseerEffectCore.h"
 #include "lib/EffekseerManagerCore.h"
+#include "lib/Vector4Map.h"
 
 
 #include <stdint.h>        // Use the C99 official header
@@ -558,6 +559,35 @@ SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Se
 
 }
 
+
+SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetProjectionMatrix
+        (JNIEnv *env, jclass cls, jlong ptr, jobject jobject1, jfloatArray projection,jfloatArray camera) {
+
+
+    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
+
+    (void) env;
+    (void) cls;
+    (void) jobject1;
+    arg1 = *(EffekseerManagerCore **) &ptr;
+
+    jfloat *progec = env->GetFloatArrayElements(projection, 0);
+    jfloat *came = env->GetFloatArrayElements(camera, 0);
+
+    Vector4Map map;
+
+    (arg1)->SetProjectionMatrix(map.map(progec),map.map(came));
+
+    {
+        env->ReleaseFloatArrayElements(projection, (jfloat *) progec, 0);
+        env->ReleaseFloatArrayElements(projection, (jfloat *)came, 0);
+    }
+
+
+
+
+
+}
 
 SWIGEXPORT jint
 JNICALL
@@ -1025,22 +1055,19 @@ SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Se
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
 
 
-
     float arg3;
     float arg4;
     float arg5;
 
-    (void)env;
-    (void)cls;
-    (void)jobject1;
+    (void) env;
+    (void) cls;
+    (void) jobject1;
 
     arg1 = *(EffekseerManagerCore **) &ptr;
 
     arg3 = (float) x;
     arg4 = (float) y;
     arg5 = (float) z;
-
-
 
 
     (arg1)->SetCameraPosition(arg3, arg4, arg5);
@@ -1051,8 +1078,8 @@ SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Se
 SWIGEXPORT void
 JNICALL
 Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetEffectPosition
-(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jfloat jarg3, jfloat jarg4, jfloat jarg5
-) {
+        (JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jfloat jarg3, jfloat jarg4, jfloat jarg5
+        ) {
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
     int arg2;
     float arg3;
@@ -1071,7 +1098,7 @@ Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetEffectPosition
     arg4 = (float) jarg4;
     arg5 = (float) jarg5;
 
-    std::cout << arg5 << std::endl;
+
 
     (arg1)->
             SetEffectPosition(arg2, arg3, arg4, arg5
@@ -1179,17 +1206,13 @@ Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetViewProjectionMatrixWit
     float_t fr = (float_t) faea;
 
 
-
-
-
-    jfloat *upp =  env->GetFloatArrayElements(up, 0);
-
+    jfloat *upp = env->GetFloatArrayElements(up, 0);
 
 
     (arg1)->SetViewProjectionMatrixWithSimpleWindowPerspective(arg2, arg3, upp, nr, fr);
 
     {
-        env->ReleaseFloatArrayElements(up,  (jfloat *) upp, 0);
+        env->ReleaseFloatArrayElements(up, (jfloat *) upp, 0);
     }
 
 }

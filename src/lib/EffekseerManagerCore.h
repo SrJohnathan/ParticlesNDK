@@ -59,7 +59,5 @@ public:
     void setPause(int handle,bool pause);
 
 
-
-
-
+    void SetProjectionMatrix(Effekseer::Matrix44 matrix44,Effekseer::Matrix44 matrix44C);
 };
