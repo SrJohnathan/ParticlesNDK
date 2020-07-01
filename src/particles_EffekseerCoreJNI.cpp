@@ -323,13 +323,11 @@ Java_particles_EffekseerCoreJNI_delete_1EffekseerBackendCore
     EffekseerBackendCore *arg1 = (EffekseerBackendCore *)
             0;
 
-    (void)
-            env;
-    (void)
-            cl;
+    (void)env;
+    (void)cl;
     arg1 = *(EffekseerBackendCore **) &longg;
-    delete
-            arg1;
+
+    delete arg1;
 
 //  jmethodID mt = env->GetMethodID(cl,"debugLib","([Ljava/lang/String;)V");
 //   env->CallStaticVoidMethod(cl,mt,"delete_1EffekseerBackendCore" );
@@ -394,11 +392,7 @@ Java_particles_EffekseerCoreJNI_EffekseerBackendCore_1Terminate
 }
 
 SWIGEXPORT jlong JNICALL
-Java_particles_EffekseerCoreJNI_new_1EffekseerEffectCore
-        (JNIEnv
-         *env,
-         jclass cl
-        ) {
+Java_particles_EffekseerCoreJNI_new_1EffekseerEffectCore (JNIEnv  *env,  jclass cl ) {
 
     jlong jresult = 0;
     EffekseerEffectCore *result = 0;
@@ -438,17 +432,9 @@ Java_particles_EffekseerCoreJNI_delete_1EffekseerEffectCore
 
 
 SWIGEXPORT jboolean JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1Load
-        (JNIEnv
-         *env,
-         jclass cl, jlong
-         lon,
-         jobject obj, jbyteArray
-         arrayb,
-         jint int1, jfloat
-         floa,
-         jlong id, jstring
-         path) {
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1Load(JNIEnv *env, jclass cl, jlong lon, jobject obj,
+                                                          jbyteArray arrayb, jint int1, jfloat floa, jlong id,
+                                                          jstring path) {
 
     jboolean jresult = 0;
     EffekseerManagerCore *core = (EffekseerManagerCore *) 0;
@@ -490,15 +476,8 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1Load
 
 
 SWIGEXPORT jstring JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetTexturePath
-        (JNIEnv
-         *env,
-         jclass cl, jlong
-         lon,
-         jobject obj, jint
-         int1,
-         jint int2
-        ) {
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetTexturePath(JNIEnv *env, jclass cl, jlong lon, jobject obj,
+                                                                    jint int1, jint int2) {
 
     jstring jresult = 0;
     EffekseerEffectCore *arg1 = (EffekseerEffectCore *) 0;
@@ -527,41 +506,8 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetTexturePath
 }
 
 
-
-
-/*
- * Class:     particles_EffekseerCoreJNI
- * Method:    SetCameraRotate
- * Signature: (JLparticles/EffekseerManagerCore;FFF)V
- */
-SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetCameraRotate
-        (JNIEnv *env, jclass cls, jlong ptr, jobject jobject1, jint jarg2, jfloat x, jfloat y, jfloat z) {
-
-
-    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
-    int arg2;
-    float arg3;
-    float arg4;
-    float arg5;
-
-    (void) env;
-    (void) cls;
-    (void) jobject1;
-    arg1 = *(EffekseerManagerCore **) &ptr;
-    arg2 = (int) jarg2;
-    arg3 = (float) x;
-    arg4 = (float) y;
-    arg5 = (float) z;
-
-
-    (arg1)->SetCameraRotate(arg3, arg4, arg5);
-
-
-}
-
-
 SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetProjectionMatrix
-        (JNIEnv *env, jclass cls, jlong ptr, jobject jobject1, jfloatArray projection,jfloatArray camera) {
+        (JNIEnv *env, jclass cls, jlong ptr, jobject jobject1, jfloatArray projection, jfloatArray camera,jboolean view, jfloat viewportWith,jfloat viewportHeith) {
 
 
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
@@ -576,27 +522,23 @@ SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Se
 
     Vector4Map map;
 
-    (arg1)->SetProjectionMatrix(map.map(progec),map.map(came));
+    (arg1)->SetProjectionMatrix(map.map(progec), map.map(came),((bool) view),(float_t) viewportWith,(float_t)viewportHeith);
 
     {
         env->ReleaseFloatArrayElements(projection, (jfloat *) progec, 0);
-        env->ReleaseFloatArrayElements(projection, (jfloat *)came, 0);
+        env->ReleaseFloatArrayElements(projection, (jfloat *) came, 0);
     }
-
-
-
 
 
 }
 
+
+
+
 SWIGEXPORT jint
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetTextureCount(JNIEnv
-                                                                     *jenv,
-                                                                     jclass jcls, jlong
-                                                                     jarg1,
-                                                                     jobject jarg1_, jint
-                                                                     jarg2) {
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetTextureCount(JNIEnv *jenv, jclass jcls, jlong jarg1,
+                                                                     jobject jarg1_, jint jarg2) {
     jint jresult = 0;
     EffekseerEffectCore *arg1 = (EffekseerEffectCore *) 0;
     EffekseerTextureType arg2;
@@ -619,16 +561,8 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetTextureCount(JNIEnv
 
 SWIGEXPORT jboolean
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadTexture(JNIEnv
-                                                                 *jenv,
-                                                                 jclass jcls, jlong
-                                                                 jarg1,
-                                                                 jobject jarg1_, jbyteArray
-                                                                 jarg2,
-                                                                 jint jarg3,
-                                                                 jint
-                                                                 jarg4,
-                                                                 jint jarg5
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadTexture(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,
+                                                                 jbyteArray jarg2, jint jarg3, jint jarg4, jint jarg5
 ) {
     jboolean jresult = 0;
     EffekseerEffectCore *arg1 = (EffekseerEffectCore *) 0;
@@ -666,13 +600,8 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadTexture(JNIEnv
 
 SWIGEXPORT jboolean
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1HasTextureLoaded(JNIEnv
-                                                                      *jenv,
-                                                                      jclass jcls, jlong
-                                                                      jarg1,
-                                                                      jobject jarg1_, jint
-                                                                      jarg2,
-                                                                      jint jarg3
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1HasTextureLoaded(JNIEnv *jenv, jclass jcls, jlong jarg1,
+                                                                      jobject jarg1_, jint jarg2, jint jarg3
 ) {
     jboolean jresult = 0;
     EffekseerEffectCore *arg1 = (EffekseerEffectCore *) 0;
@@ -698,12 +627,8 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1HasTextureLoaded(JNIEnv
 
 SWIGEXPORT jstring
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetModelPath(JNIEnv
-                                                                  *jenv,
-                                                                  jclass jcls, jlong
-                                                                  jarg1,
-                                                                  jobject jarg1_, jint
-                                                                  jarg2) {
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetModelPath(JNIEnv *jenv, jclass jcls, jlong jarg1,
+                                                                  jobject jarg1_, jint jarg2) {
     jstring jresult = 0;
     EffekseerEffectCore *arg1 = (EffekseerEffectCore *) 0;
     int32_t arg2;
@@ -728,10 +653,7 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetModelPath(JNIEnv
 
 SWIGEXPORT jint
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetModelCount(JNIEnv
-                                                                   *jenv,
-                                                                   jclass jcls, jlong
-                                                                   jarg1,
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetModelCount(JNIEnv *jenv, jclass jcls, jlong jarg1,
                                                                    jobject jarg1_
 ) {
     jint jresult = 0;
@@ -755,15 +677,8 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetModelCount(JNIEnv
 
 SWIGEXPORT jboolean
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadModel(JNIEnv
-                                                               *jenv,
-                                                               jclass jcls, jlong
-                                                               jarg1,
-                                                               jobject jarg1_, jbyteArray
-                                                               jarg2,
-                                                               jint jarg3,
-                                                               jint
-                                                               jarg4) {
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadModel(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,
+                                                               jbyteArray jarg2, jint jarg3, jint jarg4) {
     jboolean jresult = 0;
     EffekseerEffectCore *arg1 = (EffekseerEffectCore *) 0;
     char *arg2 = (char *) 0;
@@ -796,10 +711,7 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadModel(JNIEnv
 
 SWIGEXPORT jint
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetMaterialCount(JNIEnv
-                                                                      *jenv,
-                                                                      jclass jcls, jlong
-                                                                      jarg1,
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetMaterialCount(JNIEnv *jenv, jclass jcls, jlong jarg1,
                                                                       jobject jarg1_
 ) {
     jint jresult = 0;
@@ -823,15 +735,9 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1GetMaterialCount(JNIEnv
 
 SWIGEXPORT jboolean
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadMaterial(JNIEnv
-                                                                  *jenv,
-                                                                  jclass jcls, jlong
-                                                                  jarg1,
-                                                                  jobject jarg1_, jbyteArray
-                                                                  jarg2,
-                                                                  jint jarg3,
-                                                                  jint
-                                                                  jarg4) {
+Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1LoadMaterial(JNIEnv *jenv, jclass jcls, jlong jarg1,
+                                                                  jobject jarg1_, jbyteArray jarg2, jint jarg3,
+                                                                  jint jarg4) {
     jboolean jresult = 0;
     EffekseerEffectCore *arg1 = (EffekseerEffectCore *) 0;
     char *arg2 = (char *) 0;
@@ -922,9 +828,7 @@ Java_particles_EffekseerCoreJNI_EffekseerEffectCore_1HasMaterialLoaded(JNIEnv
 
 
 SWIGEXPORT jlong JNICALL
-Java_particles_EffekseerCoreJNI_new_1EffekseerManagerCore(JNIEnv
-                                                          *jenv,
-                                                          jclass jcls
+Java_particles_EffekseerCoreJNI_new_1EffekseerManagerCore(JNIEnv *jenv,jclass jcls
 ) {
     jlong jresult = 0;
     EffekseerManagerCore *result = 0;
@@ -943,10 +847,7 @@ Java_particles_EffekseerCoreJNI_new_1EffekseerManagerCore(JNIEnv
 
 SWIGEXPORT void
 JNICALL
-Java_particles_EffekseerCoreJNI_delete_1EffekseerManagerCore(JNIEnv
-                                                             *jenv,
-                                                             jclass jcls, jlong
-                                                             jarg1) {
+Java_particles_EffekseerCoreJNI_delete_1EffekseerManagerCore(JNIEnv *jenv, jclass jcls, jlong jarg1) {
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
 
     (void)
@@ -961,119 +862,62 @@ Java_particles_EffekseerCoreJNI_delete_1EffekseerManagerCore(JNIEnv
 
 SWIGEXPORT jboolean
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Initialize(JNIEnv
-                                                                 *jenv,
-                                                                 jclass jcls, jlong
-                                                                 jarg1,
-                                                                 jobject jarg1_, jint
-                                                                 jarg2,
-                                                                 jint id
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Initialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,
+                                                                 jint jarg2, jint id
 ) {
     jboolean jresult = 0;
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
     int32_t arg2;
     bool result;
 
-    (void)
-            jenv;
-    (void)
-            jcls;
-    (void)
-            jarg1_;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
     arg1 = *(EffekseerManagerCore **) &jarg1;
     arg2 = (int32_t) jarg2;
     result = (bool) (arg1)->Initialize(arg2, (int32_t) id);
     jresult = (jboolean) result;
-    return
-            jresult;
+    return jresult;
 }
 
 
 SWIGEXPORT void
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Update(JNIEnv
-                                                             *jenv,
-                                                             jclass jcls, jlong
-                                                             jarg1,
-                                                             jobject jarg1_, jfloat
-                                                             jarg2) {
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Update(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,
+                                                             jfloat jarg2) {
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
     float arg2;
-
-    (void)
-            jenv;
-    (void)
-            jcls;
-    (void)
-            jarg1_;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
     arg1 = *(EffekseerManagerCore **) &jarg1;
     arg2 = (float) jarg2;
-
-
-    (arg1)->
-            Update(arg2);
+    (arg1)->Update(arg2);
 }
 
 
 SWIGEXPORT jint
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Play(JNIEnv
-                                                           *jenv,
-                                                           jclass jcls, jlong
-                                                           jarg1,
-                                                           jobject jarg1_, jlong
-                                                           jarg2,
-                                                           jobject jarg2_
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Play(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,
+                                                           jlong jarg2, jobject jarg2_
 ) {
     jint jresult = 0;
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
     EffekseerEffectCore *arg2 = (EffekseerEffectCore *) 0;
     int result;
 
-    (void)
-            jenv;
-    (void)
-            jcls;
-    (void)
-            jarg1_;
-    (void)
-            jarg2_;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
+    (void) jarg2_;
+
     arg1 = *(EffekseerManagerCore **) &jarg1;
     arg2 = *(EffekseerEffectCore **) &jarg2;
     result = (int) (arg1)->Play(arg2);
-    jresult = (jint)
-            result;
-    return
-            jresult;
+    jresult = (jint) result;
+    return jresult;
 }
 
-
-SWIGEXPORT void JNICALL Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetCameraPosition
-        (JNIEnv *env, jclass cls, jlong ptr, jobject jobject1, jfloat x, jfloat y, jfloat z) {
-
-
-    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
-
-
-    float arg3;
-    float arg4;
-    float arg5;
-
-    (void) env;
-    (void) cls;
-    (void) jobject1;
-
-    arg1 = *(EffekseerManagerCore **) &ptr;
-
-    arg3 = (float) x;
-    arg4 = (float) y;
-    arg5 = (float) z;
-
-
-    (arg1)->SetCameraPosition(arg3, arg4, arg5);
-
-
-}
 
 SWIGEXPORT void
 JNICALL
@@ -1086,134 +930,97 @@ Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetEffectPosition
     float arg4;
     float arg5;
 
-    (void)
-            jenv;
-    (void)
-            jcls;
-    (void)
-            jarg1_;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
     arg1 = *(EffekseerManagerCore **) &jarg1;
     arg2 = (int) jarg2;
     arg3 = (float) jarg3;
     arg4 = (float) jarg4;
     arg5 = (float) jarg5;
-
-
-
-    (arg1)->
-            SetEffectPosition(arg2, arg3, arg4, arg5
+    (arg1)->SetEffectPosition(arg2, arg3, arg4, arg5
     );
 }
 
 
 SWIGEXPORT void
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1DrawBack(JNIEnv
-                                                               *jenv,
-                                                               jclass jcls, jlong
-                                                               jarg1,
-                                                               jobject jarg1_
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Resume(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,jint handle) {
+    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
+
+    int arg2;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
+    arg1 = *(EffekseerManagerCore **) &jarg1;
+    arg2 = (int) handle;
+
+
+    (arg1)->SetPause(arg2,false);
+}
+
+
+SWIGEXPORT void
+JNICALL
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Pause(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,jint handle) {
+    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
+
+    int arg2;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
+    arg1 = *(EffekseerManagerCore **) &jarg1;
+    arg2 = (int) handle;
+
+
+    (arg1)->SetPause(arg2,true);
+}
+
+SWIGEXPORT jboolean
+JNICALL
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1Isplaying(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_,jint handle) {
+    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
+
+    int arg2;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
+    arg1 = *(EffekseerManagerCore **) &jarg1;
+    arg2 = (int) handle;
+
+
+    return (jboolean) (arg1)->IsPlaing(arg2);
+}
+
+
+
+SWIGEXPORT void
+JNICALL
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1DrawBack(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_
 ) {
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
 
-    (void)
-            jenv;
-    (void)
-            jcls;
-    (void)
-            jarg1_;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
     arg1 = *(EffekseerManagerCore **) &jarg1;
-    (arg1)->
-
-            DrawBack();
+    (arg1)->DrawBack();
 
 }
 
 
 SWIGEXPORT void
 JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1DrawFront(JNIEnv
-                                                                *jenv,
-                                                                jclass jcls, jlong
-                                                                jarg1,
-                                                                jobject jarg1_
+Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1DrawFront(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_
 ) {
     EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
 
-    (void)
-            jenv;
-    (void)
-            jcls;
-    (void)
-            jarg1_;
+    (void) jenv;
+    (void) jcls;
+    (void) jarg1_;
+
     arg1 = *(EffekseerManagerCore **) &jarg1;
-    (arg1)->
-
-            DrawFront();
-
-}
-
-
-SWIGEXPORT void
-JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetViewProjectionMatrixWithSimpleWindowOrthogonal
-        (JNIEnv
-         *env,
-         jclass cl, jlong
-         lon,
-         jobject obj, jint
-         int1,
-         jint int2
-        ) {
-
-    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
-    int32_t arg2;
-    int32_t arg3;
-
-    (void)
-            env;
-    (void)
-            cl;
-    (void)
-            obj;
-    arg1 = *(EffekseerManagerCore **) &lon;
-    arg2 = (int32_t) int1;
-    arg3 = (int32_t) int2;
-    (arg1)->
-            SetViewProjectionMatrixWithSimpleWindowOrthogonal(arg2, arg3
-    );
-
-}
-
-SWIGEXPORT void
-JNICALL
-Java_particles_EffekseerCoreJNI_EffekseerManagerCore_1SetViewProjectionMatrixWithSimpleWindowPerspective
-        (JNIEnv *env, jclass cl, jlong lon, jobject obj, jfloat f1, jfloat f2, jfloatArray up, jfloat nearr,
-         jfloat faea) {
-
-    EffekseerManagerCore *arg1 = (EffekseerManagerCore *) 0;
-    float_t arg2;
-    float_t arg3;
-
-    (void) env;
-    (void) cl;
-    (void) obj;
-    arg1 = *(EffekseerManagerCore **) &lon;
-    arg2 = (float_t) f1;
-    arg3 = (float_t) f2;
-
-    float_t nr = (float_t) nearr;
-    float_t fr = (float_t) faea;
-
-
-    jfloat *upp = env->GetFloatArrayElements(up, 0);
-
-
-    (arg1)->SetViewProjectionMatrixWithSimpleWindowPerspective(arg2, arg3, upp, nr, fr);
-
-    {
-        env->ReleaseFloatArrayElements(up, (jfloat *) upp, 0);
-    }
+    (arg1)->DrawFront();
 
 }
 

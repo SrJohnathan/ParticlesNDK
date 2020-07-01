@@ -22,36 +22,14 @@
 const float DistanceBase = 15.0f;
 const float OrthoScaleBase = 16.0f;
 const float ZoomDistanceFactor = 1.125f;
-const float MaxZoom = 40.0f;
-const float MinZoom = -40.0f;
 
-static float g_RotX = 30.0f;
-static float g_RotY = -30.0f;
 static Effekseer::Vector3D g_lightDirection = Effekseer::Vector3D(1, 1, 1);
-static float g_Zoom = 0.0f;
 const float PI = 3.14159265f;
 
-static bool g_mouseRotDirectionInvX = false;
-static bool g_mouseRotDirectionInvY = false;
-
-static bool g_mouseSlideDirectionInvX = false;
-static bool g_mouseSlideDirectionInvY = false;
-
-static int g_lastViewWidth = 0;
-static int g_lastViewHeight = 0;
 
 
-void SetZoom(float zoom) { g_Zoom = Effekseer::Max(MinZoom, Effekseer::Min(MaxZoom, zoom)); }
-
-float GetDistance() { return DistanceBase * powf(ZoomDistanceFactor, g_Zoom); }
-
-float GetOrthoScale() { return OrthoScaleBase / powf(ZoomDistanceFactor, g_Zoom); }
-
-static Effekseer::Manager::DrawParameter drawParameter;
-static ::Effekseer::Vector3D g_focus_position;
 static ::Effekseer::Matrix44 projectionmatrix,cameramatrix;
 
-Effekseer::Vector3D cameraPosition = ::Effekseer::Vector3D(0.0f, 50.0f, 200.0f);
 
 EffekseerManagerCore::~EffekseerManagerCore() {
     if (manager_ != nullptr) {
@@ -100,7 +78,6 @@ bool EffekseerManagerCore::Initialize(int32_t spriteMaxCount, int32_t id) {
     renderer_ = ::EffekseerRendererGL::Renderer::Create(spriteMaxCount, openglDeviceType);
 
 
-    auto device = EffekseerRendererGL::CreateDevice(openglDeviceType);
 
 
     if (manager_ == nullptr || renderer_ == nullptr) {
@@ -131,7 +108,6 @@ bool EffekseerManagerCore::Initialize(int32_t spriteMaxCount, int32_t id) {
 
     renderer_->SetRenderMode(Effekseer::RenderMode::Normal);
     settingCore->SetCoordinateSystem(Effekseer::CoordinateSystem::RH);
-
     manager_->SetSetting(settingCore);
 
 
@@ -158,12 +134,11 @@ int EffekseerManagerCore::Play(EffekseerEffectCore *effect) {
     if (manager_ == nullptr) {
         return -1;
     }
-
     return manager_->Play(effect->GetInternal(), 0, 0, 0);
 }
 
 
-bool EffekseerManagerCore::isPlaing(int handle) {
+bool EffekseerManagerCore::IsPlaing(int handle) {
     if (manager_ == nullptr) {
         return false;
     }
@@ -185,29 +160,33 @@ void EffekseerManagerCore::SetEffectScale(int handle, float x, float y, float z)
     manager_->SetScale(handle, x, y, z);
 }
 
-void EffekseerManagerCore::SetCameraPosition(float x, float y, float z) {
-    drawParameter.CameraPosition.X = x;
-    drawParameter.CameraPosition.Y = y;
-    drawParameter.CameraPosition.Z = z;
-  //  std::cout << z << std::endl;
-
-}
-
-void EffekseerManagerCore::SetCameraRotate(float x, float y, float z) {
-
-    drawParameter.CameraDirection .X = x;
-    drawParameter.CameraDirection.Y = y;
-    drawParameter.CameraDirection.Z = z;
-}
 
 
 
-void EffekseerManagerCore::SetProjectionMatrix(Effekseer::Matrix44 matrix44,Effekseer::Matrix44 matrix44C){
+void EffekseerManagerCore::SetProjectionMatrix(Effekseer::Matrix44 matrix44,Effekseer::Matrix44 matrix44C , bool view,float_t width,float_t heith){
 
     projectionmatrix = matrix44;
     cameramatrix = matrix44C;
 
+
+    if (manager_ == nullptr) {
+        return;
+    }
+
+    if(view){
+        renderer_->SetProjectionMatrix(projectionmatrix);
+    }else{
+        renderer_->SetProjectionMatrix( ::Effekseer::Matrix44().OrthographicRH(width,heith , 0.0f, 100.0f));
+    }
+
+
+    renderer_->SetCameraMatrix(cameramatrix);
+
 }
+
+
+
+
 
 
 void EffekseerManagerCore::DrawBack() {
@@ -218,7 +197,7 @@ void EffekseerManagerCore::DrawBack() {
 
     renderer_->BeginRendering();
 
-    manager_->DrawBack(drawParameter);
+    manager_->DrawBack();
 
     renderer_->EndRendering();
 
@@ -230,133 +209,16 @@ void EffekseerManagerCore::DrawFront() {
     }
 
     renderer_->BeginRendering();
-    manager_->DrawFront(drawParameter);
+    manager_->DrawFront();
     renderer_->EndRendering();
 
 }
 
-void
-EffekseerManagerCore::SetViewProjectionMatrixWithSimpleWindowOrthogonal(int32_t windowWidth, int32_t windowHeight) {
-    if (manager_ == nullptr) {
-        return;
-    }
-
-    renderer_->SetProjectionMatrix(
-            ::Effekseer::Matrix44().OrthographicRH(static_cast<float>(windowWidth), static_cast<float>(windowHeight),
-                                                   1.0f, 400.0f));
-
-    renderer_->SetCameraMatrix(
-            ::Effekseer::Matrix44().LookAtRH(::Effekseer::Vector3D(windowWidth / 2.0f, windowHeight / 2.0f, 200.0f),
-                                             ::Effekseer::Vector3D(windowWidth / 2.0f, windowHeight / 2.0f, -200.0f),
-                                             ::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
-}
-
-void
-EffekseerManagerCore::SetViewProjectionMatrixWithSimpleWindowPerspective(float_t windowWidth, float_t windowHeight,float_t up[],float_t nea, float_t faer) {
-
-    if (manager_ == nullptr) {
-        return;
-    }
-
-
-
-
-   //  renderer_->SetProjectionMatrix(::Effekseer::Matrix44().PerspectiveFovRH_OpenGL(67.0f / 180.0f * 3.14f, (float) windowWidth / (float) windowHeight,nea, faer));
-
-   renderer_->SetProjectionMatrix(projectionmatrix);
-    renderer_->SetCameraMatrix(cameramatrix);
-
-
-   // renderer_->SetCameraMatrix(::Effekseer::Matrix44().LookAtRH(drawParameter.CameraPosition,::Effekseer::Vector3D(0.0f,0.0f,0.0f),::Effekseer::Vector3D(up[0], up[1], up[2])));
-
-}
-
-
-
-
-
-void EffekseerManagerCore::UpdateWindowR() {
-
-
-    assert(manager_ != NULL);
-    assert(renderer_ != NULL);
-
-    ::Effekseer::Vector3D position(0, 0, GetDistance());
-    ::Effekseer::Matrix43 mat, mat_rot_x, mat_rot_y;
-
-
-    mat_rot_x.RotationX(-g_RotX / 180.0f * PI);
-
-
-    mat_rot_y.RotationY(-g_RotY / 180.0f * PI);
-    ::Effekseer::Matrix43::Multiple(mat, mat_rot_x, mat_rot_y);
-    ::Effekseer::Vector3D::Transform(position, position, mat);
-
-    Effekseer::Vector3D::Normal(drawParameter.CameraDirection, position);
-
-    position.X += g_focus_position.X;
-    position.Y += g_focus_position.Y;
-    position.Z += g_focus_position.Z;
-
-    ::Effekseer::Matrix44 cameraMat;
-    renderer_->SetCameraMatrix(
-            ::Effekseer::Matrix44().LookAtRH(position, g_focus_position, ::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
-
-    drawParameter.CameraPosition = position;
-
-
-    manager_->Draw(drawParameter);
-
-}
-
-
-void EffekseerManagerCore::UpdateWindowL() {
-
-
-    assert(manager_ != NULL);
-    assert(renderer_ != NULL);
-
-    ::Effekseer::Vector3D position(0, 0, GetDistance());
-    ::Effekseer::Matrix43 mat, mat_rot_x, mat_rot_y;
-
-
-    mat_rot_x.RotationX(-g_RotX / 180.0f * PI);
-
-
-    mat_rot_y.RotationY((g_RotY + 180.0f) / 180.0f * PI);
-
-
-    ::Effekseer::Matrix43::Multiple(mat, mat_rot_x, mat_rot_y);
-    ::Effekseer::Vector3D::Transform(position, position, mat);
-    ::Effekseer::Vector3D temp_focus = g_focus_position;
-
-
-    temp_focus.Z = -temp_focus.Z;
-
-    Effekseer::Vector3D::Normal(drawParameter.CameraDirection, position);
-
-    position.X += temp_focus.X;
-    position.Y += temp_focus.Y;
-    position.Z += temp_focus.Z;
-
-
-    renderer_->SetCameraMatrix(
-            ::Effekseer::Matrix44().LookAtLH(position, temp_focus, ::Effekseer::Vector3D(0.0f, 1.0f, 0.0f)));
-
-    drawParameter.CameraPosition = position;
-
-
-
-
-    manager_->Draw(drawParameter);
-
-
-}
-
-void EffekseerManagerCore::setPause(int i,bool pause) {
-
+void EffekseerManagerCore::SetPause(int i,bool pause) {
     manager_->SetPaused(i,pause);
 }
+
+
 
 
 

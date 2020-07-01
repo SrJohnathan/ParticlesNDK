@@ -35,29 +35,23 @@ public:
 
     int Play(EffekseerEffectCore *effect);
 
-    bool isPlaing(int handle);
+    bool IsPlaing(int handle);
 
     void SetEffectPosition(int handle, float x, float y, float z);
     void SetEffectRoate(int handle, float x, float y, float z);
     void SetEffectScale(int handle, float x, float y, float z);
-    void SetCameraPosition( float x, float y, float z);
-    void SetCameraRotate( float x, float y, float z);
+
 
     void DrawBack();
 
     void DrawFront();
 
 
-    void SetViewProjectionMatrixWithSimpleWindowOrthogonal(int32_t windowWidth, int32_t windowHeight);
-
-    void SetViewProjectionMatrixWithSimpleWindowPerspective( float_t windowWidth, float_t windowHeight,float_t up[],float_t nea, float_t faer );
-
-    void UpdateWindowR();
-
-    void UpdateWindowL();
-
-    void setPause(int handle,bool pause);
 
 
-    void SetProjectionMatrix(Effekseer::Matrix44 matrix44,Effekseer::Matrix44 matrix44C);
+    void SetPause(int handle,bool pause);
+
+
+    void SetProjectionMatrix(Effekseer::Matrix44 matrix44,Effekseer::Matrix44 matrix44C, bool view,float_t width,float_t heith);
+
 };
